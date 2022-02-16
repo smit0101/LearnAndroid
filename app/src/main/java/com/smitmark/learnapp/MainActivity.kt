@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -49,10 +50,6 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun App(){
-    var enable by remember {mutableStateOf(false)}
-    val textColor by animateColorAsState(targetValue = if(enable) Color.Black else Color.Gray)
-
-
     val listOFText = listOf("All", "Shoes", "Bag","Clothing","Cap","Pants","Blazer")
     val products = listOf(
         Product(R.drawable.one,"Nike Air Pegaus", secondTitle = "Your workhorse with wing returns", byCompany = "by Nike", price = 180),
@@ -61,7 +58,7 @@ fun App(){
     )               
     Column(modifier = Modifier
         .fillMaxSize()
-        .background(JordiBlue)) {
+        .background(MagicMint)) {
         Spacer(modifier = Modifier.size(20.dp))
         Text(text = "Nike Collections", 
             color = Color.Black, 
@@ -82,12 +79,33 @@ fun App(){
                 .weight(1.0f)
                 .clip(shape = RoundedCornerShape(6.dp))
                 .background(BlueishWhite),
-                contentAlignment = Alignment.CenterStart){
-                Image(painter = painterResource(id = R.drawable.search),
+                contentAlignment = Alignment.CenterStart) {
+                Row (verticalAlignment = Alignment.CenterVertically){
+                    Image(
+                        painter = painterResource(id = R.drawable.search),
                         contentDescription = "Search",
                         modifier = Modifier
                             .size(40.dp)
-                            .padding(start = 10.dp))
+                            .padding(start = 10.dp)
+                    )
+                    var value by remember {
+                        mutableStateOf("")
+                    }
+                    TextField(value = value, onValueChange = {value=it},modifier = Modifier
+                        .fillMaxSize(),
+                        colors = TextFieldDefaults.textFieldColors(
+                            textColor = Color.Gray,
+                            disabledTextColor = Color.Transparent,
+                            backgroundColor = Color.Transparent,
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent,
+                            disabledIndicatorColor = Color.Transparent
+                        ),
+                    textStyle = TextStyle(Color.Gray, fontFamily = FontFamily.Default,
+                        fontSize = 20.sp),
+                    )
+
+                }
             }
             Spacer(modifier = Modifier.size(10.dp))
             Box(modifier = Modifier
@@ -105,6 +123,8 @@ fun App(){
         Spacer(modifier = Modifier.size(20.dp))
         LazyRow(modifier = Modifier.padding(20.dp)){
             items(items = listOFText){
+                var enable by remember {mutableStateOf(false)}
+                val textColor by animateColorAsState(targetValue = if(enable) Color.Black else Color.Gray)
                     Text(text = it,
                         color = textColor,
                         fontFamily = FontFamily.Default,
@@ -168,7 +188,14 @@ fun App(){
                                     .clip(shape = RoundedCornerShape(6.dp))
                                     .size(width = 90.dp, height = 40.dp)
                                     .background(Color.Black)
-                                    .clickable{ context.startActivity(Intent(context,SecondScreen::class.java)) },
+                                    .clickable {
+                                        context.startActivity(
+                                            Intent(
+                                                context,
+                                                SecondScreen::class.java
+                                            )
+                                        )
+                                    },
                                     contentAlignment = Alignment.Center
                                     ) {
                                    Text(text = " Buy ",
