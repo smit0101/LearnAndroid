@@ -215,14 +215,6 @@ fun App(){
        
 }
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    LearnAppTheme {
-
-    }
-}
-
 
 @Composable
 fun LikeButton(likeImage:Int,onClick:()->Unit){
@@ -245,3 +237,12 @@ data class Product(val id:Int, val mainTitle:String="No Data", val secondTitle:S
 
 
 
+
+
+@Preview(showBackground = true)
+@Composable
+fun DefaultPreview() {
+    LearnAppTheme {
+
+    }
+}
