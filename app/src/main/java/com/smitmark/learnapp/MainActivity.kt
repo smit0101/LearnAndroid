@@ -77,6 +77,7 @@ fun App(){
             Box(modifier = Modifier
                 .height(50.dp)
                 .weight(1.0f)
+                .shadow(elevation = 10.dp,clip=true, shape = RoundedCornerShape(10.dp))
                 .clip(shape = RoundedCornerShape(6.dp))
                 .background(BlueishWhite),
                 contentAlignment = Alignment.CenterStart) {
@@ -111,6 +112,7 @@ fun App(){
             Box(modifier = Modifier
                 .height(50.dp)
                 .weight(0.2f)
+                .shadow(elevation = 10.dp,clip=true, shape = RoundedCornerShape(10.dp))
                 .clip(shape = RoundedCornerShape(6.dp))
                 .background(BlueishWhite),
                 contentAlignment = Alignment.Center
