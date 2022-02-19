@@ -187,6 +187,7 @@ fun App(){
                                     fontSize = 20.sp,)
                                 Spacer(modifier = Modifier.size(20.dp))
                                 Box(modifier = Modifier
+                                    .shadow(elevation = 10.dp,clip=true, shape = RoundedCornerShape(10.dp))
                                     .clip(shape = RoundedCornerShape(6.dp))
                                     .size(width = 90.dp, height = 40.dp)
                                     .background(Color.Black)
