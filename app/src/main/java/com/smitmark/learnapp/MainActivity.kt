@@ -37,6 +37,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.smitmark.learnapp.model.Product
 import com.smitmark.learnapp.ui.theme.LearnAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -233,7 +234,7 @@ fun LikeButton(likeImage:Int,onClick:()->Unit){
     }
 }
 
-data class Product(val id:Int, val mainTitle:String="No Data", val secondTitle:String="No Data", val byCompany:String="No Data", val price:Int=0)
+
 
 
 
