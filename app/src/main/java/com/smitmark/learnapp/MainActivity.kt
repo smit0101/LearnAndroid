@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.colorspace.WhitePoint
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -51,11 +52,14 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun App(){
+    var value by remember {
+        mutableStateOf("")
+    }
     val listOFText = listOf("All", "Shoes", "Bag","Clothing","Cap","Pants","Blazer")
     val products = listOf(
         Product(R.drawable.one,"Nike Air Pegaus", secondTitle = "Your workhorse with wing returns", byCompany = "by Nike", price = 180),
         Product(R.drawable.two,"Nike ZoomX", secondTitle = "The Nike zoomX veporfly next clears", byCompany = "by Nike", price = 320),
-        Product(R.drawable.one,"Nike Air Pegaus", secondTitle = "Your feet is jet", byCompany = "by Nike", price = 590)
+        Product(R.drawable.one,"Nike Air Pegaus", secondTitle = "Your feet is jet", byCompany = "by Nike", price = 590),
     )               
     Column(modifier = Modifier
         .fillMaxSize()
@@ -78,7 +82,7 @@ fun App(){
             Box(modifier = Modifier
                 .height(50.dp)
                 .weight(1.0f)
-                .shadow(elevation = 10.dp,clip=true, shape = RoundedCornerShape(10.dp))
+                .shadow(elevation = 10.dp, clip = true, shape = RoundedCornerShape(10.dp))
                 .clip(shape = RoundedCornerShape(6.dp))
                 .background(BlueishWhite),
                 contentAlignment = Alignment.CenterStart) {
@@ -90,9 +94,7 @@ fun App(){
                             .size(40.dp)
                             .padding(start = 10.dp)
                     )
-                    var value by remember {
-                        mutableStateOf("")
-                    }
+
                     TextField(value = value, onValueChange = {value=it},modifier = Modifier
                         .fillMaxSize(),
                         colors = TextFieldDefaults.textFieldColors(
@@ -113,7 +115,7 @@ fun App(){
             Box(modifier = Modifier
                 .height(50.dp)
                 .weight(0.2f)
-                .shadow(elevation = 10.dp,clip=true, shape = RoundedCornerShape(10.dp))
+                .shadow(elevation = 10.dp, clip = true, shape = RoundedCornerShape(10.dp))
                 .clip(shape = RoundedCornerShape(6.dp))
                 .background(BlueishWhite),
                 contentAlignment = Alignment.Center
@@ -121,6 +123,20 @@ fun App(){
                 Image(painter = painterResource(id = R.drawable.menu),
                     contentDescription = "Search",
                     modifier = Modifier.size(30.dp))
+            }
+        }
+        Spacer(modifier = Modifier.size(20.dp))
+        if(value.isNotEmpty()){
+            LazyRow(contentPadding = PaddingValues(10.dp)){
+                items(value.length){
+                    Box(modifier = Modifier
+                        .width(50.dp)
+                        .height(50.dp)
+                        .shadow(elevation = 10.dp, clip = true, shape = RoundedCornerShape(50.dp))
+                        .clip(shape = RoundedCornerShape(50.dp))
+                        .background(Color.Black), contentAlignment = Alignment.Center){}
+                    Spacer(modifier = Modifier.size(10.dp))
+                }
             }
         }
         Spacer(modifier = Modifier.size(20.dp))
@@ -188,7 +204,11 @@ fun App(){
                                     fontSize = 20.sp,)
                                 Spacer(modifier = Modifier.size(20.dp))
                                 Box(modifier = Modifier
-                                    .shadow(elevation = 10.dp,clip=true, shape = RoundedCornerShape(10.dp))
+                                    .shadow(
+                                        elevation = 10.dp,
+                                        clip = true,
+                                        shape = RoundedCornerShape(10.dp)
+                                    )
                                     .clip(shape = RoundedCornerShape(6.dp))
                                     .size(width = 90.dp, height = 40.dp)
                                     .background(Color.Black)
