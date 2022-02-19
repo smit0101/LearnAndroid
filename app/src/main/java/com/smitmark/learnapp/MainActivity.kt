@@ -24,6 +24,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.focusModifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.colorspace.WhitePoint
 import androidx.compose.ui.graphics.graphicsLayer
@@ -63,7 +64,13 @@ fun App(){
     )               
     Column(modifier = Modifier
         .fillMaxSize()
-        .background(MagicMint)) {
+        .background(
+            brush = Brush.horizontalGradient(
+                listOf(JordiBlue, Cerulea)),
+        shape = RoundedCornerShape(10.dp),
+        alpha = 1.0F
+    )
+    ) {
         Spacer(modifier = Modifier.size(20.dp))
         Text(text = "Nike Collections", 
             color = Color.Black, 
@@ -160,7 +167,7 @@ fun App(){
             items(products){
                 var like by remember { mutableStateOf(false) }
                 val likeImage by animateIntAsState(targetValue = if(like) R.drawable.heart else R.drawable.love)
-                Card(elevation = 10.dp, modifier = Modifier.padding(bottom = 20.dp)) {
+                Card(elevation = 10.dp, modifier = Modifier.padding(bottom = 20.dp)){
                     Row(modifier = Modifier.padding(20.dp)){
                         Column(modifier = Modifier.weight(0.5f)
                             ) {
@@ -198,7 +205,7 @@ fun App(){
                             Row(verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.Center) {
                                 val context = LocalContext.current
-                                Text(text = it.price.takeIf { it is Int }.toString(),
+                                Text(text = it.price.toString(),
                                     color = Color.Gray,
                                     fontFamily = FontFamily.Default,
                                     fontSize = 20.sp,)
