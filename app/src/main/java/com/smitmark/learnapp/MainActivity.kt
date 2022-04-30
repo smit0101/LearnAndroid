@@ -53,6 +53,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun App(){
+
     var value by remember {
         mutableStateOf("")
     }

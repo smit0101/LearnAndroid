@@ -12,7 +12,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.smitmark.learnapp.ui.theme.LearnAppTheme
@@ -33,7 +37,7 @@ fun Test(){
         Modifier
             .fillMaxWidth()
             .height(200.dp)
-            .background(Color.Blue),
+            .background(Color.White),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
@@ -50,10 +54,32 @@ fun Test(){
     }
 }
 
+@Preview
+@Composable
+fun TestTwo(){
+    Column(
+        Modifier
+            .size(300.dp)
+            .drawBehind {
+                drawArc(
+                    color = Color.Black,
+                    sweepAngle = 260f,
+                    startAngle = -90f,
+                    useCenter = false,
+                    style = Stroke(width = 20f, cap = StrokeCap.Round),
+                    size = size / 1.25f,
+                )
+            }, verticalArrangement = Arrangement.SpaceAround,
+    horizontalAlignment = Alignment.CenterHorizontally) {
+        Test()
+
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview2() {
     LearnAppTheme {
-
+         TestTwo()
     }
 }
