@@ -3,6 +3,8 @@ package com.smitmark.learnapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -25,48 +27,88 @@ import com.smitmark.learnapp.ui.theme.LearnAppTheme
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.*
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.sp
+import com.smitmark.learnapp.ui.theme.Cerulea
+import com.smitmark.learnapp.ui.theme.JordiBlue
+import com.smitmark.learnapp.ui.theme.Purple500
 
 class SecondScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Column() {
-                var value by remember{
-                    mutableStateOf(0f)
-                }
-                TestTwo(value)
-                Button(onClick = {
-                    if(value > 360f || value < -360f ){ value = 0f}
 
-                    value += 10f
+            Progress()
 
-
-                }) {
-                    Text(text = "Plus",
-                        color = Color.Red,
-                        fontFamily = FontFamily.Default,
-                        fontSize = 25.sp,)
-                }
-                Button(onClick = {
-
-                    if(value > 360f || value < -360f ){ value = 0f}
-                    value -= 10f}) {
-                    Text(text = "Minus",
-                        color = Color.Red,
-                        fontFamily = FontFamily.Default,
-                        fontSize = 25.sp,)
-                }
-            }
-            }
+        }
 
     }
 }
 
 
 @Composable
-fun Test(){
+fun Progress() {
+    Column(
+        Modifier
+            .background(
+                brush = Brush.horizontalGradient(
+                    listOf(JordiBlue, Cerulea)
+                ),
+                shape = RoundedCornerShape(10.dp),
+                alpha = 1.0F
+            )
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        var value by remember {
+            mutableStateOf(0f)
+        }
+
+        val valueTwo by animateFloatAsState(targetValue = value, animationSpec = tween(500))
+        TestThree(valueTwo)
+        Row() {
+
+
+            Button(onClick = {
+                if (value > 360f || value < -360f) {
+                    value = 0f
+                }
+
+                value += 10f
+
+
+            }) {
+                Text(
+                    text = " + ",
+                    color = Color.White,
+                    fontFamily = FontFamily.Default,
+                    fontSize = 25.sp,
+                )
+            }
+            Spacer(modifier = Modifier.size(20.dp))
+            Button(onClick = {
+
+                if (value > 360f || value < -360f) {
+                    value = 0f
+                }
+                value -= 10f
+            }) {
+                Text(
+                    text = " - ",
+                    color = Color.White,
+                    fontFamily = FontFamily.Default,
+                    fontSize = 25.sp,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun Test() {
     LazyRow(
         Modifier
             .fillMaxWidth()
@@ -90,53 +132,77 @@ fun Test(){
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun TestTwo(value:Float){
+fun TestTwo(value: Float) {
     Column(
         Modifier
             .fillMaxWidth()
             .height(300.dp)
-            .background(Color.Black)
-            ,verticalArrangement = Arrangement.SpaceAround,
-    horizontalAlignment = Alignment.CenterHorizontally) {
+            .background(Color.White), verticalArrangement = Arrangement.SpaceAround,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
 
 
-            androidx.compose.foundation.Canvas(modifier = Modifier
-                .size(200.dp), contentDescription = ""){
+        androidx.compose.foundation.Canvas(
+            modifier = Modifier
+                .size(200.dp)
+                .shadow(elevation = 10.dp, clip = true, shape = RoundedCornerShape(50.dp))
+                .clip(
+                    RoundedCornerShape(200.dp)
+                ), contentDescription = ""
+        ) {
 
-                drawArc(
-                    color = Color.White,
-                    sweepAngle = value,
-                    startAngle = -90f,
-                    useCenter = false,
-                    style = Stroke(width = 100f, cap = StrokeCap.Round)
-                )
+            drawArc(
+                color = Color.White,
+                sweepAngle = value,
+                startAngle = -90f,
+                useCenter = false,
+                style = Stroke(width = 100f, cap = StrokeCap.Round)
+            )
 
-            }
+        }
     }
 }
 
 
-@Preview
 @Composable
-fun TestThree(){
+fun TestThree(value: Float) {
     Column(
         Modifier
-            .size(200.dp)
+            .size(300.dp)
             .drawBehind {
                 drawArc(
-                    color = Color.Black,
-                    sweepAngle = 290f,
+                    color = Color.White,
+                    sweepAngle = 360f,
                     startAngle = -90f,
                     useCenter = false,
                     style = Stroke(width = 100f, cap = StrokeCap.Round),
                     size = size / 1.25f,
+                    topLeft = Offset(
+                        x = (size.width - ((size / 1.25f).width)) / 2f,
+                        y = (size.height - ((size / 1.25f).height)) / 2f
+                    )
+                )
+                drawArc(
+                    color = Purple500,
+                    sweepAngle = value,
+                    startAngle = -90f,
+                    useCenter = false,
+                    style = Stroke(width = 100f, cap = StrokeCap.Round),
+                    size = size / 1.25f,
+                    topLeft = Offset(
+                        x = (size.width - ((size / 1.25f).width)) / 2f,
+                        y = (size.height - ((size / 1.25f).height)) / 2f
+                    )
                 )
             }, verticalArrangement = Arrangement.SpaceAround,
-        horizontalAlignment = Alignment.CenterHorizontally) {
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
 
-        Box(modifier = Modifier
-            .size(50.dp)
-            .background(Color.Black))
+        /*
+Box(modifier = Modifier
+.size(50.dp)
+.background(Color.Black))
+*/
     }
 }
 
@@ -145,7 +211,7 @@ fun TestThree(){
 @Composable
 fun DefaultPreview2() {
     LearnAppTheme {
-         TestTwo(260f)
+
     }
 }
 
