@@ -69,7 +69,7 @@ fun Progress() {
 
         val valueTwo by animateFloatAsState(targetValue = value, animationSpec = tween(500))
         TestThree(valueTwo)
-        Row() {
+        Row {
 
 
             Button(onClick = {
@@ -117,16 +117,19 @@ fun Test() {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        items(2) {
-            Box(
-                Modifier
-                    .width(50.dp)
-                    .height(50.dp)
-                    .background(Color.Black)
-            )
-            // Spacer(modifier = Modifier.size(20.dp))
+        items(
+            2,
+            itemContent = {
+                Box(
+                    Modifier
+                        .width(50.dp)
+                        .height(50.dp)
+                        .background(Color.Black),
+                )
+                // Spacer(modifier = Modifier.size(20.dp))
 
-        }
+            },
+        )
     }
 }
 
